@@ -19,7 +19,13 @@ class SidebarDiscovery {
     }
 
     try {
-      await page.waitForSelector('#doc_left_menu', { timeout });
+      // Click sidebar toggle to expand if hidden
+      const toggle = await page.$('.api-doc-module__icon--JQF1g');
+      if (toggle) {
+        await toggle.click();
+        await new Promise((r) => setTimeout(r, 500));
+      }
+      await page.waitForSelector('#doc_left_menu', { timeout, state: 'visible' });
     } catch (err) {
       console.error('[SidebarDiscovery] sidebar not found:', err.message);
       return [];
