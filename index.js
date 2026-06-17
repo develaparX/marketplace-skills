@@ -6,8 +6,62 @@ const ContentExtractor = require('./src/extractor');
 const LLMProcessor = require('./src/processor');
 const SkillGenerator = require('./src/generator');
 
+// Simple spinner
+class Spinner {
+  constructor(text) {
+    this.text = text;
+    this.frames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+    this.i = 0;
+    this.timer = null;
+  }
+
+  start() {
+    process.stdout.write(`\r${this.frames[0]} ${this.text}`);
+    this.timer = setInterval(() => {
+      this.i = (this.i + 1) % this.frames.length;
+      process.stdout.write(`\r${this.frames[this.i]} ${this.text}`);
+    }, 80);
+    return this;
+  }
+
+  succeed(text) {
+    clearInterval(this.timer);
+    process.stdout.write(`\r✅ ${text}\n`);
+  }
+
+  fail(text) {
+    clearInterval(this.timer);
+    process.stdout.write(`\r❌ ${text}\n`);
+  }
+
+  stop() {
+    clearInterval(this.timer);
+    process.stdout.write('\r');
+  }
+}
+
+async function testLLM(processor) {
+  const spinner = new Spinner('Testing LLM connection...').start();
+  try {
+    const result = await processor.testConnection();
+    if (result) {
+      spinner.succeed(`LLM connected: ${config.llm.model} @ ${config.llm.baseUrl}`);
+      return true;
+    } else {
+      spinner.fail('LLM test failed - check API key and base URL');
+      return false;
+    }
+  } catch (err) {
+    spinner.fail(`LLM test failed: ${err.message}`);
+    return false;
+  }
+}
+
 async function main() {
-  console.log('🚀 Starting TikTok Shop Docs Scraper...');
+  console.log('🚀 TikTok Shop Docs Scraper\n');
+  console.log(`   Model: ${config.llm.model}`);
+  console.log(`   API:   ${config.llm.baseUrl}`);
+  console.log(`   Docs:  ${config.baseUrl}${config.startUrl}\n`);
 
   const browser = new BrowserManager(config);
   const discovery = new SidebarDiscovery(browser, config);
@@ -15,11 +69,18 @@ async function main() {
   const processor = new LLMProcessor(config);
   const generator = new SkillGenerator(config);
 
+  // Test LLM first
+  const llmOk = await testLLM(processor);
+  if (!llmOk) {
+    console.log('\nFix .env and try again.');
+    process.exit(1);
+  }
+
   try {
     // Step 1: Discover API links
-    console.log('\n📋 Discovering API documentation links...');
+    const spinner1 = new Spinner('Discovering API documentation links...').start();
     const links = await discovery.discoverLinks();
-    console.log(`Found ${links.length} API documentation pages`);
+    spinner1.succeed(`Found ${links.length} API documentation pages`);
 
     if (links.length === 0) {
       console.log('No API links found. Exiting.');
@@ -31,34 +92,43 @@ async function main() {
 
     for (let i = 0; i < links.length; i++) {
       const link = links[i];
-      console.log(`\n📄 Processing [${i + 1}/${links.length}]: ${link.title}`);
+      console.log(`\n📄 [${i + 1}/${links.length}] ${link.title}`);
 
       try {
         // Navigate to page
+        const spinnerNav = new Spinner('  Loading page...').start();
         await browser.navigate(link.href);
-        await new Promise((r) => setTimeout(r, 2000)); // Wait for render
+        await new Promise((r) => setTimeout(r, 2000));
+        spinnerNav.succeed('  Page loaded');
 
         // Extract content
+        const spinnerExtract = new Spinner('  Extracting content...').start();
         const markdown = await extractor.extract();
-        console.log(`  ✓ Extracted ${markdown.length} characters`);
+        spinnerExtract.succeed(`  Extracted ${markdown.length} characters`);
 
         // Parse with LLM
-        console.log('  🤖 Parsing with AI...');
+        const spinnerParse = new Spinner('  🤖 AI parsing documentation...').start();
+        const t0 = Date.now();
         const apiData = await processor.parseAPIDocumentation(markdown, link.title);
+        const parseTime = ((Date.now() - t0) / 1000).toFixed(1);
 
         if (!apiData) {
-          console.log('  ⚠️  Failed to parse, skipping');
+          spinnerParse.fail('  Failed to parse, skipping');
           continue;
         }
+        spinnerParse.succeed(`  Parsed in ${parseTime}s → ${apiData.name}`);
 
         // Generate skill content
-        console.log('  ✍️  Generating skill...');
+        const spinnerGen = new Spinner('  ✍️  Generating skill...').start();
+        const t1 = Date.now();
         const skillContent = await processor.generateSkillContent(apiData);
+        const genTime = ((Date.now() - t1) / 1000).toFixed(1);
 
         if (!skillContent) {
-          console.log('  ⚠️  Failed to generate skill, skipping');
+          spinnerGen.fail('  Failed to generate skill, skipping');
           continue;
         }
+        spinnerGen.succeed(`  Skill generated in ${genTime}s`);
 
         // Save skill file
         const result = await generator.generate(apiData, skillContent);
@@ -68,23 +138,26 @@ async function main() {
           description: apiData.description,
         });
 
-        console.log(`  ✓ Generated: ${result.filename}`);
+        console.log(`  📁 Saved: ${result.filename}`);
 
-        // Rate limiting - wait between requests
-        await new Promise((r) => setTimeout(r, 1000));
+        // Rate limiting
+        await new Promise((r) => setTimeout(r, 500));
       } catch (error) {
-        console.error(`  ❌ Error processing ${link.title}:`, error.message);
+        console.error(`  ❌ Error: ${error.message}`);
       }
     }
 
     // Step 3: Generate index
     if (generatedSkills.length > 0) {
-      console.log('\n📚 Generating master index...');
+      const spinnerIndex = new Spinner('Generating master index...').start();
       await generator.generateIndex(generatedSkills);
+      spinnerIndex.succeed('Index generated');
     }
 
-    console.log(`\n✅ Done! Generated ${generatedSkills.length} skills`);
-    console.log(`📁 Skills saved to: ${config.output.dir}`);
+    console.log(`\n${'─'.repeat(50)}`);
+    console.log(`✅ Done! Generated ${generatedSkills.length} skills`);
+    console.log(`📁 ${config.output.dir}`);
+    console.log(`${'─'.repeat(50)}`);
   } finally {
     await browser.close();
   }

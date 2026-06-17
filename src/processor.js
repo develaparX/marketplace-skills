@@ -10,6 +10,19 @@ class LLMProcessor {
     });
   }
 
+  async testConnection() {
+    try {
+      const response = await this.client.chat.completions.create({
+        model: this.config.llm.model,
+        messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
+        max_tokens: 10,
+      });
+      return !!response.choices?.[0]?.message?.content;
+    } catch (err) {
+      return false;
+    }
+  }
+
   async parseAPIDocumentation(markdown, pageTitle) {
     const prompt = `You are an API documentation parser. Extract structured data from this TikTok Shop API documentation.
 
