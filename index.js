@@ -64,6 +64,7 @@ async function testLLM(processor) {
 
 // ponytail: check if skill file already exists
 async function skillExists(name) {
+  if (!name) return false;
   const filename = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.md';
   try {
     await fs.access(path.join(config.output.dir, filename));
@@ -96,10 +97,16 @@ async function main() {
   try {
     // Step 1: Discover API links
     const spinner1 = new Spinner('Discovering API documentation links...').start();
-    const links = await discovery.discoverLinks();
+    let links = [];
+    try {
+      links = await discovery.discoverLinks();
+    } catch (err) {
+      spinner1.fail(`Discovery failed: ${err.message}`);
+      return;
+    }
     spinner1.succeed(`Found ${links.length} API documentation pages`);
 
-    if (links.length === 0) {
+    if (!Array.isArray(links) || links.length === 0) {
       console.log('No API links found. Exiting.');
       return;
     }
@@ -109,10 +116,18 @@ async function main() {
 
     for (let i = 0; i < links.length; i++) {
       const link = links[i];
-      console.log(`\n📄 [${i + 1}/${links.length}] ${link.title}`);
+      
+      // ponytail: skip invalid links
+      if (!link?.href) {
+        console.log(`\n📄 [${i + 1}/${links.length}] ⚠️  Invalid link, skipping`);
+        continue;
+      }
+      
+      const title = link.title || `Page ${i + 1}`;
+      console.log(`\n📄 [${i + 1}/${links.length}] ${title}`);
 
       // Skip if already generated (unless --re)
-      if (!forceRegenerate && await skillExists(link.title)) {
+      if (!forceRegenerate && await skillExists(title)) {
         console.log('  ⏭️  Already exists, skipping');
         continue;
       }
@@ -127,6 +142,13 @@ async function main() {
         // Extract content
         const spinnerExtract = new Spinner('  Extracting content...').start();
         const markdown = await extractor.extract();
+        
+        // ponytail: skip empty/invalid content
+        if (!markdown || markdown.length < 50) {
+          spinnerExtract.fail('  Content too short or empty, skipping');
+          continue;
+        }
+        
         spinnerExtract.succeed(`  Extracted ${markdown.length} characters`);
 
         // Parse with LLM (10 retries with exponential backoff)
@@ -149,10 +171,14 @@ async function main() {
           continue;
         }
         
-        // ponytail: fallback name if LLM omits it
-        if (!apiData.name) {
-          apiData.name = link.title || 'unnamed-api';
-        }
+        // ponytail: fallbacks for missing fields
+        if (!apiData.name) apiData.name = title;
+        if (!apiData.method) apiData.method = 'UNKNOWN';
+        if (!apiData.path) apiData.path = '/';
+        if (!apiData.description) apiData.description = 'No description available';
+        if (!Array.isArray(apiData.parameters)) apiData.parameters = [];
+        if (!Array.isArray(apiData.response_fields)) apiData.response_fields = [];
+        if (!Array.isArray(apiData.error_codes)) apiData.error_codes = [];
         
         spinnerParse.succeed(`  Parsed in ${parseTime}s → ${apiData.name}`);
 
