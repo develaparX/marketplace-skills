@@ -47,7 +47,7 @@ class LLMProcessor {
   }
 
   async parseAPIDocumentation(markdown, pageTitle) {
-    const prompt = `You are an API documentation parser. Extract structured data from this TikTok Shop API documentation.
+    let prompt = `You are an API documentation parser. Extract structured data from this TikTok Shop API documentation.
 
 Page Title: ${pageTitle}
 
@@ -87,6 +87,12 @@ Extract and return a JSON object with this exact structure:
 
 If any field cannot be determined from the docs, use null. Return ONLY the JSON object, no other text.`;
 
+    // ponytail: truncate long docs to avoid LLM output truncation
+    const maxInput = 10000;
+    if (prompt.length > maxInput) {
+      prompt = prompt.slice(0, maxInput) + '\n\n[Document truncated - extract from above]';
+    }
+
     // ponytail: 10 retries with exponential backoff
     for (let attempt = 0; attempt < 10; attempt++) {
       try {
@@ -94,7 +100,7 @@ If any field cannot be determined from the docs, use null. Return ONLY the JSON 
           model: this.config.llm.model,
           messages: [{ role: 'user', content: prompt }],
           temperature: 0.1,
-          max_tokens: 4000,
+          max_tokens: 6000,
         });
 
         if (!response.choices?.[0]?.message?.content) {
