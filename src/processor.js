@@ -100,7 +100,7 @@ If any field cannot be determined from the docs, use null. Return ONLY the JSON 
           model: this.config.llm.model,
           messages: [{ role: 'user', content: prompt }],
           temperature: 0.1,
-          max_tokens: 6000,
+          max_tokens: 100000,
         });
 
         if (!response.choices?.[0]?.message?.content) {
