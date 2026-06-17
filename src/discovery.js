@@ -32,15 +32,11 @@ class SidebarDiscovery {
       }))
     );
 
+    // Deduplicate by href, keep all docs
     const unique = [...new Map(links.map((link) => [link.href, link])).values()];
 
-    const methodRe = /\b(get|create|update|delete|query|batch)\b/i;
-    const apiLinks = unique.filter((link) =>
-      methodRe.test(link.title) ||
-      /\/api\//i.test(link.href)
-    );
-
-    return apiLinks;
+    // Filter: skip empty titles and non-doc links
+    return unique.filter((link) => link.title.length > 0);
   }
 }
 
