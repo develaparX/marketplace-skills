@@ -6,6 +6,7 @@ class LLMProcessor {
     this.config = config;
     this.client = new OpenAI({
       apiKey: config.llm.apiKey,
+      baseURL: config.llm.baseUrl,
     });
   }
 
