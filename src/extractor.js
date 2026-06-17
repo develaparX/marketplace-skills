@@ -6,7 +6,7 @@ class ContentExtractor {
   async extract() {
     const page = this.browser.page;
 
-    await page.waitForSelector('main, article, [class*="content"], [class*="doc"]', {
+    await page.waitForSelector('main, article, [class*="content"], [class*="doc"], .api-reference-detail, .markdown-body', {
       timeout: 10000,
     });
 
@@ -17,6 +17,12 @@ class ContentExtractor {
         '[class*="content-wrapper"]',
         '[class*="doc-content"]',
         '[class*="markdown-body"]',
+        // Shopee-specific selectors
+        '.api-reference-detail',
+        '.api-reference-content',
+        '[class*="api-detail"]',
+        '[class*="detail-content"]',
+        '.doc-content-container',
       ];
 
       for (const selector of selectors) {

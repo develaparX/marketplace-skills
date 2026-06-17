@@ -6,6 +6,7 @@ if (!process.env.OPENAI_API_KEY) {
 }
 
 module.exports = {
+  // ponytail: tiktok config (original)
   baseUrl: 'https://partner.tiktokshop.com/docv2',
   startUrl: '/api-document',
   llm: {
@@ -20,5 +21,20 @@ module.exports = {
   browser: {
     headless: true,
     timeout: 30000,
+  },
+  // ponytail: multi-target config
+  targets: {
+    tiktok: {
+      name: 'TikTok Shop',
+      baseUrl: 'https://partner.tiktokshop.com/docv2',
+      startUrl: '/api-document',
+      output: { dir: './skills/tiktok-shop' },
+    },
+    shopee: {
+      name: 'Shopee',
+      baseUrl: 'https://open.shopee.com',
+      startUrl: '/documents/v2/v2.ads.get_total_balance?module=117&type=1',
+      output: { dir: './skills/shopee' },
+    },
   },
 };

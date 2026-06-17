@@ -46,8 +46,9 @@ class LLMProcessor {
     return cleaned;
   }
 
-  async parseAPIDocumentation(markdown, pageTitle) {
-    let prompt = `You are an API documentation parser. Extract structured data from this TikTok Shop API documentation.
+  async parseAPIDocumentation(markdown, pageTitle, platform) {
+    const platformName = platform || 'TikTok Shop';
+    let prompt = `You are an API documentation parser. Extract structured data from this ${platformName} API documentation.
 
 Page Title: ${pageTitle}
 
@@ -129,7 +130,8 @@ If any field cannot be determined from the docs, use null. Return ONLY the JSON 
   }
 
   async generateSkillContent(apiData) {
-    const prompt = `Convert this API data into a clear, implementation-focused skill document.
+    const platform = apiData.targetName || 'TikTok Shop';
+    const prompt = `Convert this ${platform} API data into a clear, implementation-focused skill document.
 
 API Data:
 ${JSON.stringify(apiData, null, 2)}

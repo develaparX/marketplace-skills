@@ -5,7 +5,109 @@ class SidebarDiscovery {
     this.config = config;
   }
 
-  async discoverLinks() {
+  async discoverLinks(target) {
+    if (target === 'shopee') return this.discoverLinksShopee();
+    return this.discoverLinksTiktok();
+  }
+
+  async discoverLinksShopee() {
+    const timeout = this.config.browser?.timeout ?? 30000;
+    const targetCfg = this.config.targets.shopee;
+
+    let page;
+    try {
+      page = await this.browser.navigate(
+        `${targetCfg.baseUrl}${targetCfg.startUrl}`
+      );
+    } catch (err) {
+      console.error('[SidebarDiscovery:Shopee] navigation failed:', err.message);
+      return [];
+    }
+
+    // Wait for SPA to render - try multiple selectors
+    const sidebarSelectors = [
+      '.api-reference-category-box',
+      '.category-item-name-box',
+      '[data-ts-primary_category]',
+      '.timestone-category',
+      '#__nuxt .sidebar',
+      '[class*="sidebar"]',
+      '[class*="menu"]',
+    ];
+
+    let found = false;
+    for (const sel of sidebarSelectors) {
+      try {
+        await page.waitForSelector(sel, { timeout: 5000, state: 'attached' });
+        console.log(`  [Shopee] Found sidebar with: ${sel}`);
+        found = true;
+        break;
+      } catch {
+        // try next selector
+      }
+    }
+
+    if (!found) {
+      // Fallback: wait for any content to load
+      console.log('  [Shopee] Sidebar selectors not found, waiting for page load...');
+      await new Promise((r) => setTimeout(r, 8000));
+      
+      // Debug: log page content
+      const bodyText = await page.evaluate(() => document.body?.innerText?.slice(0, 500) || 'empty');
+      console.log(`  [Shopee] Page content preview: ${bodyText.slice(0, 200)}`);
+    }
+
+    // Expand all collapsed categories by clicking category headers
+    try {
+      await page.evaluate(() => {
+        document.querySelectorAll('.category-item-name-box, [class*="category-folded"]').forEach((el) => el.click());
+      });
+      await new Promise((r) => setTimeout(r, 2000));
+    } catch (e) {
+      console.log('  [Shopee] Could not expand categories:', e.message);
+    }
+
+    // Extract all API items from sidebar
+    const links = await page.evaluate(() => {
+      // Try multiple selectors for API items
+      const selectors = [
+        '.timestone-category[data-ts-content_name]',
+        '[data-ts-content_name]',
+        'a[href*="/documents/v2/v2."]',
+      ];
+      
+      for (const sel of selectors) {
+        const items = document.querySelectorAll(sel);
+        if (items.length > 0) {
+          return Array.from(items).map((el) => {
+            const contentName = el.getAttribute('data-ts-content_name');
+            const contentId = el.getAttribute('data-ts-content_id');
+            const version = el.getAttribute('data-ts-version') || 'V2';
+            const titleEl = el.querySelector('.api-reference-item-name-container, [class*="item-name"]');
+            const title = titleEl ? titleEl.textContent.trim() : (contentName || el.textContent.trim());
+
+            // Parse category from contentName: "v2.ams.get_open_campaign_added_product" → "ams"
+            const parts = (contentName || '').split('.');
+            const category = parts.length >= 2 ? parts[1] : 'unknown';
+
+            // Build URL
+            const href = contentName 
+              ? `https://open.shopee.com/documents/v2/${contentName}?module=${contentId}&type=1`
+              : el.href;
+
+            return { title, href, category, contentName, version };
+          });
+        }
+      }
+      return [];
+    });
+
+    // Deduplicate by href
+    const unique = [...new Map(links.map((link) => [link.href, link])).values()];
+    return unique.filter((link) => link.title && link.title.length > 0);
+  }
+
+  async discoverLinksTiktok() {
     const timeout = this.config.browser?.timeout ?? 15000;
 
     let page;

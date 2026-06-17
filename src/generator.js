@@ -12,13 +12,14 @@ class SkillGenerator {
     await fs.mkdir(this.outputDir, { recursive: true });
     const filename = this.createFilename(apiData.name);
     const filepath = path.join(this.outputDir, filename);
+    const platform = apiData.targetName || 'TikTok Shop';
 
-    const skillMarkdown = `# TikTok Shop API: ${apiData.name}
+    const skillMarkdown = `# ${platform} API: ${apiData.name}
 
 ${skillContent}
 
 ---
-*Auto-generated from TikTok Shop Partner Center documentation*
+*Auto-generated from ${platform} documentation*
 *Endpoint: \`${apiData.method} ${apiData.path}\`*
 `;
 
@@ -30,7 +31,9 @@ ${skillContent}
 
   async generateIndex(skills) {
     await fs.mkdir(this.outputDir, { recursive: true });
-    const indexContent = `# TikTok Shop API Skills
+    // ponytail: detect platform from first skill or output dir
+    const platform = this.outputDir.includes('shopee') ? 'Shopee' : 'TikTok Shop';
+    const indexContent = `# ${platform} API Skills
 
 ## Available APIs
 
@@ -39,7 +42,7 @@ ${skills
   .join('\n')}
 
 ---
-*Auto-generated index. Each skill contains implementation details for the corresponding TikTok Shop API.*
+*Auto-generated index. Each skill contains implementation details for the corresponding ${platform} API.*
 `;
 
     const indexPath = path.join(this.outputDir, '_index.md');
