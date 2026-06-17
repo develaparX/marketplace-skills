@@ -1,10 +1,15 @@
 // index.js
+const fs = require('fs').promises;
+const path = require('path');
 const config = require('./config');
 const BrowserManager = require('./src/browser');
 const SidebarDiscovery = require('./src/discovery');
 const ContentExtractor = require('./src/extractor');
 const LLMProcessor = require('./src/processor');
 const SkillGenerator = require('./src/generator');
+
+// Parse --re flag
+const forceRegenerate = process.argv.includes('--re');
 
 // Simple spinner
 class Spinner {
@@ -57,11 +62,23 @@ async function testLLM(processor) {
   }
 }
 
+// ponytail: check if skill file already exists
+async function skillExists(name) {
+  const filename = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.md';
+  try {
+    await fs.access(path.join(config.output.dir, filename));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function main() {
   console.log('🚀 TikTok Shop Docs Scraper\n');
   console.log(`   Model: ${config.llm.model}`);
   console.log(`   API:   ${config.llm.baseUrl}`);
-  console.log(`   Docs:  ${config.baseUrl}${config.startUrl}\n`);
+  console.log(`   Docs:  ${config.baseUrl}${config.startUrl}`);
+  console.log(`   Mode:  ${forceRegenerate ? 'Regenerate all' : 'Skip existing'}\n`);
 
   const browser = new BrowserManager(config);
   const discovery = new SidebarDiscovery(browser, config);
@@ -93,6 +110,12 @@ async function main() {
     for (let i = 0; i < links.length; i++) {
       const link = links[i];
       console.log(`\n📄 [${i + 1}/${links.length}] ${link.title}`);
+
+      // Skip if already generated (unless --re)
+      if (!forceRegenerate && await skillExists(link.title)) {
+        console.log('  ⏭️  Already exists, skipping');
+        continue;
+      }
 
       try {
         // Navigate to page
