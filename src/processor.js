@@ -30,9 +30,9 @@ class LLMProcessor {
     // Remove markdown code block markers
     let cleaned = str.replace(/```(?:json)?\s*/g, '').replace(/```/g, '');
     
-    // Fix common JSON escape issues from LLM output
-    // Replace literal newlines in strings with \\n
-    cleaned = cleaned.replace(/(?<=:")([^"]*?)(?=")/g, (match) => {
+    // Escape literal control chars inside JSON strings
+    // Match JSON strings properly: "..." with escaped chars handled
+    cleaned = cleaned.replace(/"(?:[^"\\]|\\.)*"/g, (match) => {
       return match
         .replace(/\n/g, '\\n')
         .replace(/\r/g, '\\r')
@@ -40,12 +40,8 @@ class LLMProcessor {
         .replace(/\0/g, '\\0');
     });
     
-    // Remove any trailing commas before } or ]
+    // Remove trailing commas before } or ]
     cleaned = cleaned.replace(/,\s*([}\]])/g, '$1');
-    
-    // Fix double-escaped quotes
-    cleaned = cleaned.replace(/\\"/g, '"');
-    cleaned = cleaned.replace(/\\\\/g, '\\');
     
     return cleaned;
   }
