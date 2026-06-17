@@ -49,7 +49,7 @@ ${skills
 
   createFilename(name) {
     return (
-      name
+      (name || 'unnamed')
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '') + '.md'

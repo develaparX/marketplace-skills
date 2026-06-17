@@ -148,6 +148,12 @@ async function main() {
           spinnerParse.fail('  Failed to parse after 10 attempts, skipping');
           continue;
         }
+        
+        // ponytail: fallback name if LLM omits it
+        if (!apiData.name) {
+          apiData.name = link.title || 'unnamed-api';
+        }
+        
         spinnerParse.succeed(`  Parsed in ${parseTime}s → ${apiData.name}`);
 
         // Generate skill content
