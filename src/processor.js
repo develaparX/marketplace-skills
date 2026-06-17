@@ -26,6 +26,30 @@ class LLMProcessor {
     }
   }
 
+  cleanJson(str) {
+    // Remove markdown code block markers
+    let cleaned = str.replace(/```(?:json)?\s*/g, '').replace(/```/g, '');
+    
+    // Fix common JSON escape issues from LLM output
+    // Replace literal newlines in strings with \\n
+    cleaned = cleaned.replace(/(?<=:")([^"]*?)(?=")/g, (match) => {
+      return match
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r')
+        .replace(/\t/g, '\\t')
+        .replace(/\0/g, '\\0');
+    });
+    
+    // Remove any trailing commas before } or ]
+    cleaned = cleaned.replace(/,\s*([}\]])/g, '$1');
+    
+    // Fix double-escaped quotes
+    cleaned = cleaned.replace(/\\"/g, '"');
+    cleaned = cleaned.replace(/\\\\/g, '\\');
+    
+    return cleaned;
+  }
+
   async parseAPIDocumentation(markdown, pageTitle) {
     const prompt = `You are an API documentation parser. Extract structured data from this TikTok Shop API documentation.
 
@@ -67,8 +91,8 @@ Extract and return a JSON object with this exact structure:
 
 If any field cannot be determined from the docs, use null. Return ONLY the JSON object, no other text.`;
 
-    // ponytail: single retry with backoff, more if throughput matters
-    for (let attempt = 0; attempt < 2; attempt++) {
+    // ponytail: 10 retries with exponential backoff
+    for (let attempt = 0; attempt < 10; attempt++) {
       try {
         const response = await this.client.chat.completions.create({
           model: this.config.llm.model,
@@ -85,12 +109,17 @@ If any field cannot be determined from the docs, use null. Return ONLY the JSON 
 
         // Parse JSON from response (handle markdown code blocks)
         const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, content];
-        return JSON.parse(jsonMatch[1].trim());
+        const cleanedJson = this.cleanJson(jsonMatch[1].trim());
+        return JSON.parse(cleanedJson);
       } catch (error) {
-        if (attempt === 0) {
-          await new Promise(r => setTimeout(r, 2000));
+        if (attempt < 9) {
+          const delay = Math.min(1000 * Math.pow(2, attempt), 10000); // exponential backoff, max 10s
+          if (attempt > 0) {
+            console.error(`\n   ⚠️  Retry ${attempt + 1}/10 after ${delay/1000}s...`);
+          }
+          await new Promise(r => setTimeout(r, delay));
         } else {
-          console.error(`LLM processing error for ${pageTitle}:`, error.message);
+          console.error(`\n   ❌ Failed after 10 attempts: ${error.message}`);
           return null;
         }
       }

@@ -106,14 +106,23 @@ async function main() {
         const markdown = await extractor.extract();
         spinnerExtract.succeed(`  Extracted ${markdown.length} characters`);
 
-        // Parse with LLM
+        // Parse with LLM (10 retries with exponential backoff)
         const spinnerParse = new Spinner('  🤖 AI parsing documentation...').start();
         const t0 = Date.now();
-        const apiData = await processor.parseAPIDocumentation(markdown, link.title);
+        let apiData = null;
+        for (let attempt = 0; attempt < 10; attempt++) {
+          apiData = await processor.parseAPIDocumentation(markdown, link.title);
+          if (apiData) break;
+          if (attempt < 9) {
+            const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+            spinnerParse.text = `  🤖 Retry ${attempt + 1}/10...`;
+            await new Promise(r => setTimeout(r, delay));
+          }
+        }
         const parseTime = ((Date.now() - t0) / 1000).toFixed(1);
 
         if (!apiData) {
-          spinnerParse.fail('  Failed to parse, skipping');
+          spinnerParse.fail('  Failed to parse after 10 attempts, skipping');
           continue;
         }
         spinnerParse.succeed(`  Parsed in ${parseTime}s → ${apiData.name}`);
