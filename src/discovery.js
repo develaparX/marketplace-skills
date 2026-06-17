@@ -6,14 +6,25 @@ class SidebarDiscovery {
   }
 
   async discoverLinks() {
-    const page = await this.browser.navigate(
-      `${this.config.baseUrl}${this.config.startUrl}`
-    );
+    const timeout = this.config.timeout ?? 15000;
 
-    // Wait for sidebar to render
-    await page.waitForSelector('a[href*="/docv2/page/"]', { timeout: 15000 });
+    let page;
+    try {
+      page = await this.browser.navigate(
+        `${this.config.baseUrl}${this.config.startUrl}`
+      );
+    } catch (err) {
+      console.error('[SidebarDiscovery] navigation failed:', err.message);
+      return [];
+    }
 
-    // Extract all doc links from sidebar
+    try {
+      await page.waitForSelector('a[href*="/docv2/page/"]', { timeout });
+    } catch (err) {
+      console.error('[SidebarDiscovery] sidebar not found:', err.message);
+      return [];
+    }
+
     const links = await page.$$eval('a[href*="/docv2/page/"]', (els) =>
       els.map((el) => ({
         title: el.textContent.trim(),
@@ -21,19 +32,12 @@ class SidebarDiscovery {
       }))
     );
 
-    // Deduplicate by href
     const unique = [...new Map(links.map((link) => [link.href, link])).values()];
 
-    // Filter out non-API pages (keep only API-related)
+    const methodRe = /\b(get|create|update|delete|query|batch)\b/i;
     const apiLinks = unique.filter((link) =>
-      link.title.toLowerCase().includes('api') ||
-      link.href.includes('api') ||
-      link.title.toLowerCase().includes('get-') ||
-      link.title.toLowerCase().includes('create-') ||
-      link.title.toLowerCase().includes('update-') ||
-      link.title.toLowerCase().includes('delete-') ||
-      link.title.toLowerCase().includes('query-') ||
-      link.title.toLowerCase().includes('batch-')
+      methodRe.test(link.title) ||
+      /\/api\//i.test(link.href)
     );
 
     return apiLinks;

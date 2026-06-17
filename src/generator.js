@@ -9,6 +9,7 @@ class SkillGenerator {
   }
 
   async generate(apiData, skillContent) {
+    await fs.mkdir(this.outputDir, { recursive: true });
     const filename = this.createFilename(apiData.name);
     const filepath = path.join(this.outputDir, filename);
 
@@ -28,6 +29,7 @@ ${skillContent}
   }
 
   async generateIndex(skills) {
+    await fs.mkdir(this.outputDir, { recursive: true });
     const indexContent = `# TikTok Shop API Skills
 
 ## Available APIs

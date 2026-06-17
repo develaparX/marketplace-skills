@@ -23,8 +23,8 @@ class BrowserManager {
     return this.page;
   }
 
-  async waitForContent(selector = 'main, article, [class*="content"]') {
-    await this.page.waitForSelector(selector, { timeout: 10000 });
+  async waitForContent(selector) {
+    await this.page.waitForSelector(selector, { timeout: this.config.browser.timeout });
   }
 
   async getContent() {

@@ -9,13 +9,6 @@ const SkillGenerator = require('./src/generator');
 async function main() {
   console.log('🚀 Starting TikTok Shop Docs Scraper...');
 
-  // Check for API key
-  if (!config.llm.apiKey) {
-    console.error('❌ Error: OPENAI_API_KEY environment variable not set');
-    console.log('Set it with: export OPENAI_API_KEY="your-key-here"');
-    process.exit(1);
-  }
-
   const browser = new BrowserManager(config);
   const discovery = new SidebarDiscovery(browser, config);
   const extractor = new ContentExtractor(browser);

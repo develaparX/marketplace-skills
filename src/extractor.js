@@ -21,7 +21,7 @@ class ContentExtractor {
 
       for (const selector of selectors) {
         const el = document.querySelector(selector);
-        if (el && el.innerText.trim().length > 100) {
+        if (el && el.textContent.trim().length > 100) {
           return el.innerHTML;
         }
       }
@@ -38,10 +38,12 @@ class ContentExtractor {
     md = md.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
     md = md.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
 
-    md = md.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n');
-    md = md.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
-    md = md.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n');
-    md = md.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n\n');
+    md = md.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, (_, inner) => '# ' + inner.replace(/<[^>]+>/g, '') + '\n\n');
+    md = md.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, inner) => '## ' + inner.replace(/<[^>]+>/g, '') + '\n\n');
+    md = md.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, inner) => '### ' + inner.replace(/<[^>]+>/g, '') + '\n\n');
+    md = md.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, (_, inner) => '#### ' + inner.replace(/<[^>]+>/g, '') + '\n\n');
+    md = md.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, (_, inner) => '##### ' + inner.replace(/<[^>]+>/g, '') + '\n\n');
+    md = md.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, (_, inner) => '###### ' + inner.replace(/<[^>]+>/g, '') + '\n\n');
 
     md = md.replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**');
     md = md.replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**');
@@ -67,10 +69,10 @@ class ContentExtractor {
 
     md = md.replace(/<[^>]+>/g, '');
 
+    md = md.replace(/&amp;/g, '&');
     md = md.replace(/&nbsp;/g, ' ');
     md = md.replace(/&lt;/g, '<');
     md = md.replace(/&gt;/g, '>');
-    md = md.replace(/&amp;/g, '&');
     md = md.replace(/\n\s*\n\s*\n/g, '\n\n');
     md = md.trim();
 

@@ -58,6 +58,10 @@ If any field cannot be determined from the docs, use null. Return ONLY the JSON 
         max_tokens: 4000,
       });
 
+      if (!response.choices?.[0]?.message?.content) {
+        return { error: 'LLM returned empty response' };
+      }
+
       const content = response.choices[0].message.content;
 
       // Parse JSON from response (handle markdown code blocks)
@@ -65,7 +69,7 @@ If any field cannot be determined from the docs, use null. Return ONLY the JSON 
       return JSON.parse(jsonMatch[1].trim());
     } catch (error) {
       console.error(`LLM processing error for ${pageTitle}:`, error.message);
-      return null;
+      return { error: error.message };
     }
   }
 
@@ -95,10 +99,14 @@ Write in a practical, developer-focused style. No fluff, just actionable informa
         max_tokens: 3000,
       });
 
+      if (!response.choices?.[0]?.message?.content) {
+        return { error: 'LLM returned empty response' };
+      }
+
       return response.choices[0].message.content;
     } catch (error) {
       console.error('Skill generation error:', error.message);
-      return null;
+      return { error: error.message };
     }
   }
 }
