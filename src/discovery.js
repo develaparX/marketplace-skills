@@ -25,7 +25,7 @@ class SidebarDiscovery {
         await toggle.click();
         await new Promise((r) => setTimeout(r, 500));
       }
-      await page.waitForSelector('#doc_left_menu', { timeout, state: 'visible' });
+      await page.waitForSelector('#doc_left_menu', { timeout, state: 'attached' });
     } catch (err) {
       console.error('[SidebarDiscovery] sidebar not found:', err.message);
       return [];

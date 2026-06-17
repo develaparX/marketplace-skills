@@ -1,0 +1,297 @@
+# TikTok Shop API Skills
+
+## Available APIs
+
+- [Listing quality diagnosis](./listing-quality-diagnosis.md) - No description available
+- [Common mistakes](./common-mistakes.md) - No description available
+- [Check Product Listing](./check-product-listing.md) - No description available
+- [Upload Product Image](./upload-product-image.md) - Upload product image to system.
+- [Upload Product File](./upload-product-file.md) - Upload non-image files, such as PDF or video to TikTok Shop.
+- [Search Size Charts](./search-size-charts.md) - Retrieve size charts that a seller has created.
+- [Create Product](./create-product.md) - No description available
+- [Activate Product](./activate-product.md) - Activate hidden products in Seller_deactivated or Platform_deactivated status and display them in TikTok Shop catalog.
+- [Deactivate Products](./deactivate-products.md) - Deactivate products in Activate status and hide them from buyers. Status changes to Seller_deactivated.
+- [Delete Products](./delete-products.md) - Delete non-frozen products that you no longer need.
+- [Recover Products](./recover-products.md) - Recover products that are in the Deleted status. The status changes to Seller_deactivated after recovery.
+- [Get Product](./get-product.md) - Retrieve all properties of a product, except those in the FREEZE or DELETED status.
+- [Search Products](./search-products.md) - No description available
+- [Update Price](./update-price.md) - No description available
+- [Update Inventory](./update-inventory.md) - No description available
+- [Inventory Search](./inventory-search.md) - Retrieve inventory information for multiple products or SKUs.
+- [Diagnose and Optimize Product](./diagnose-and-optimize-product.md) - No description available
+- [Product Information Issue Diagnosis](./product-information-issue-diagnosis.md) - No description available
+- [Get Products SEO Words](./get-products-seo-words.md) - Obtain SEO suggestions for product titles of live products (status: ACTIVATE) to enhance product visibility.
+- [Get Recommended Product Title And Description](./get-recommended-product-title-and-description.md) - Obtain AI-optimized product titles and descriptions for live products (status: ACTIVATE).
+- [Optimized Images](./optimized-images.md) - Optimize images by changing background to white. Asynchronous process.
+- [Create Image Translation Tasks](./create-image-translation-tasks.md) - No description available
+- [Get Image Translation Tasks](./get-image-translation-tasks.md) - Retrieves the image translation task status and translated images for one or more previously submitted images.
+- [Get Global Categories](./get-global-categories.md) - Retrieve all available product categories, regardless of market variations.
+- [Recommend Global Categories](./recommend-global-categories.md) - Retrieve recommended categories for candidate global product based on title, description, images.
+- [Get Global Category Rules](./get-global-category-rules.md) - No description available
+- [Get Global Attributes](./get-global-attributes.md) - Retrieve standard built-in product and sales attributes for listing global product in category.
+- [Create Global Product](./create-global-product.md) - No description available
+- [Publish Global Product](./publish-global-product.md) - No description available
+- [Edit Global Product](./edit-global-product.md) - No description available
+- [Delete Global Products](./delete-global-products.md) - Delete global products that you no longer need.
+- [Get Global Product](./get-global-product.md) - Retrieve all properties of a global product that is in the "DRAFT", "UNPUBLISHED", or "PUBLISHED" status, and the corresponding local product IDs in the published markets.
+- [Search Global Products](./search-global-products.md) - No description available
+- [Update Global Inventory](./update-global-inventory.md) - No description available
+- [Create Manufacturer](./create-manufacturer.md) - Add a manufacturer for a seller. Automatically translated into all EU languages supported by TikTok Shop.
+- [Partial Edit Manufacturer](./partial-edit-manufacturer.md) - No description available
+- [Search Manufacturers](./search-manufacturers.md) - No description available
+- [Create Responsible Person](./create-responsible-person.md) - No description available
+- [Partial Edit Responsible Person](./partial-edit-responsible-person.md) - No description available
+- [Search Responsible Persons](./search-responsible-persons.md) - No description available
+- [Create Category Upgrade Task](./create-category-upgrade-task.md) - Create task to upgrade live products from 3-level to 7-level category tree.
+- [Get Global Listing Rules](./get-global-listing-rules.md) - Retrieves the global listing rules for a local shop that belongs to a global seller.
+- [Replicate Product](./replicate-product.md) - No description available
+- [Get Global Replicated Products](./get-global-replicated-products.md) - Retrieves the globally associated replicas in other markets if the product has been replicated through local replication. Applicable only for global sellers.
+- [Edit Product](./edit-product.md) - No description available
+- [Partial Edit Product](./partial-edit-product.md) - No description available
+- [Partial Edit Global Product](./partial-edit-global-product.md) - No description available
+- [Product Auditing Research](./product-auditing-research.md) - For compliant vendor to rescan all of the product information so that the compliant vendor can issue a compliance testing report.
+- [Get Recommended Product Package](./get-recommended-product-package.md) - Retrieve a list of product recommended packages. Only available in BR and MX.
+- [Get Opportunity Detail](./get-opportunity-detail.md) - Retrieve the full details of a single opportunity lead by its ID, including market trend data, competition level, and recommended actions.
+- [List Opportunity](./list-opportunity.md) - No description available
+- [Submit Product via Opportunity](./submit-product-via-opportunity.md) - Submit existing product as response to specific opportunity lead.
+- [Get Submission Records](./get-submission-records.md) - No description available
+- [Create GPA Upgrade Task](./create-gpa-upgrade-task.md) - This interface is only available for EU L2L sellers. The interface is used to upgrade products on EU interconnection.
+- [Update Stock Operation Settings](./update-stock-operation-settings.md) - Allows sellers to configure auto-replenishment settings for one or more SKUs in bulk.
+- [Submit Appeal Task](./submit-appeal-task.md) - No description available
+- [List Products SKPP Status](./list-products-skpp-status.md) - Batch query SKPP status for the seller's products.
+- [Get Product SKPP Detail](./get-product-skpp-detail.md) - Return the SKPP diagnostic for one product.
+- [Get Shop SKPP Summary](./get-shop-skpp-summary.md) - Return the shop-level SKPP products roll-up.
+- [Promotion API overview](./promotion-api-overview.md) - Overview of TikTok Shop promotion activities (Product Discount, Flash Deal, Coupon/Voucher) and the APIs used to manage them.
+- [Shipping discount supported areas](./shipping-discount-supported-areas.md) - Lists the supported geographical areas for shipping discounts when creating or updating a promotion activity.
+- [Create Activity](./create-activity.md) - Use this API to create a product discount activity or a flash deal activity.
+- [Update Activity](./update-activity.md) - Change the title and the beginning and end time of the existing product discount or flash sale promotion activity.
+- [Deactivate Activity](./deactivate-activity.md) - Deactivate an ongoing or upcoming activity.
+- [Get Activity](./get-activity.md) - Get the details of a product discount or flash deal promotion activity.
+- [Search Activities](./search-activities.md) - Get a list of product discount or flash deal promotion activities.
+- [Update Activity Product](./update-activity-product.md) - Use this API to add the products or SKUs to the list of a product discount activity or a flash deal activity. You can also change the discounts on existing products or SKUs.
+- [Remove Activity Product](./remove-activity-product.md) - Use this API to remove products or SKUs from the existing product discount or flash sale promotion activity.
+- [Get Coupon](./get-coupon.md) - Use this API to get the full details of a coupon matching the {coupon_id}.
+- [Search Coupons](./search-coupons.md) - Use this API to get a list of coupons, narrowed down further based on search parameters.
+- [Order API overview](./order-api-overview.md) - No description available
+- [Get Order List](./get-order-list.md) - Returns a list of orders created or updated during the timeframe indicated by the specified parameters. You can also apply a range of filtering criteria to narrow the list of orders returned.
+- [Get Price Detail](./get-price-detail.md) - Get the detailed pricing calculation information of an order or a line item, including vouchers, tax, etc.
+- [Add External Order References](./add-external-order-references.md) - Use this endpoint to attach the information in your OMS to the correct order(s) in TikTok Shop for further reference.
+- [Get External Order References](./get-external-order-references.md) - If you have used the Add External Order References API to sync order information between your external order management system (OMS) and TikTok Shop, you may call this API to get information on the synced orders.
+- [Search Order By External Order Reference](./search-order-by-external-order-reference.md) - Search for order information in TikTok Shop based on information in your external order management system (OMS).
+- [Get Order Detail](./get-order-detail.md) - Get the detailed order information of an order, including important attributes such as order status, shipping addresses, payment details, price and tax info, and package information.
+- [Update The Blind Box Opening Results](./update-the-blind-box-opening-results.md) - After the merchant completes the blind box opening in the live room, then the blind box results are transmitted back to the platform, after which the user can view the unboxing results in the order details.
+- [Fulfillment API overview](./fulfillment-api-overview.md) - No description available
+- [Get Order Split Attributes](./get-order-split-attributes.md) - Use this API to check whether an order(s) can be split into multiple packages or not.
+- [Split Orders](./split-orders.md) - Use this API to confirm an order split.
+- [Get Eligible Shipping Service](./get-eligible-shipping-service.md) - Query the list of available shipping services when specifying packages' size or weight.
+- [Create First Mile Bundle](./create-first-mile-bundle.md) - If you send multiple packages to TikTok Shop warehouse in a single first-mile bundle, you can use the API to create a first-mile bundle on TikTok Shop and get the bundle ID.
+- [Search Package](./search-package.md) - Retrieve package IDs based on specified conditions. Package creation time and information update time are the common querying conditions.
+- [Search Combinable Packages](./search-combinable-packages.md) - Use this API to query orders eligible for combined shipping.
+- [Combine Package](./combine-package.md) - Use this API to combine packages into one fulfillment package.
+- [Uncombine Packages](./uncombine-packages.md) - Use this API to uncombine one or more orders from an already combined package.
+- [Get Package Handover Time Slots](./get-package-handover-time-slots.md) - No description available
+- [Ship Package](./ship-package.md) - No description available
+- [Batch Ship Packages](./batch-ship-packages.md) - No description available
+- [Mark Package As Shipped](./mark-package-as-shipped.md) - No description available
+- [Get Package Shipping Document](./get-package-shipping-document.md) - Retrieves the URL of shipping documents (shipping label and packing slip) for a package specified by the package ID. Applicable to TikTok Shipping orders.
+- [Get Package Detail](./get-package-detail.md) - Returns information about a package, including handover time slot, tracking number, and shipping provider information.
+- [Get Tracking](./get-tracking.md) - This API can use the order number to obtain the corresponding logistics tracking information.
+- [Update Shipping Info](./update-shipping-info.md) - Allows the seller to update the tracking number and shipping provider for an order that has already been shipped.
+- [Update Package Shipping Info](./update-package-shipping-info.md) - Allows the seller to update the tracking number and shipping provider for a package that has already been shipped.
+- [Fulfillment Upload Delivery File](./fulfillment-upload-delivery-file.md) - This API is used for the seller to upload the proof of delivery file for a package, and to generate the URL of the corresponding file.
+- [Fulfillment Upload Delivery Image](./fulfillment-upload-delivery-image.md) - This API is used for the seller to upload the proof of delivery image for a package, and to generate the URL of the corresponding file.
+- [Update Package Delivery Status](./update-package-delivery-status.md) - Use this API to update the delivery status of the package from in transit status. Only sellers utilizing the SOF (Seller Own Fleet) capability can use this API to update the package status to 'DELIVERED'. This API is only available for the SEA region.
+- [Upload Invoice](./upload-invoice.md) - Upload the invoice document. Applicable only for local sellers in the Brazil market.
+- [TTS Tracking Validation](./tts-tracking-validation.md) - Enables a seller or warehouse to validate whether a tracking number is covered by TikTok Shipping (TTS) or Collection by TikTok (CBT). Available only in the US Market.
+- [Create First Mile Bundle(V2)](./create-first-mile-bundle-v2.md) - If you send multiple packages to TikTok Shop warehouse in a single first-mile bundle, you can use the API to create a first-mile bundle on TikTok Shop and get the bundle ID.
+- [Create Packages](./create-packages.md) - Ship orders (purchase labels). US and JP only.
+- [Redeem Info Callback](./redeem-info-callback.md) - Send the redeem info related to the order to the TTS to complete the fulfillment.
+- [FBT Inbound API — Overview Guide](./fbt-inbound-api-overview-guide.md) - No description available
+- [Get FBT Merchant Onboarded Regions](./get-fbt-merchant-onboarded-regions.md) - This API verifies whether a seller is registered as a Fulfillment by TikTok (FBT) merchant. If the seller is onboarded, the API returns the regions where the merchant is authorized to operate under the FBT system.
+- [Get FBT Warehouse List](./get-fbt-warehouse-list.md) - This API is used to retrieve all Fulfilled by TikTok warehouse information including the warehouse name, warehouse address information, etc.
+- [Search FBT Inventory](./search-fbt-inventory.md) - This API is used to retrieve detailed inventory information for goods and matched SKUs, including sellable inventory, reserved inventory, unsellable inventory, and in-transit inventory at the warehouse level.
+- [Search FBT Inventory Record](./search-fbt-inventory-record.md) - This API is used to retrieve detailed inventory change records for goods at the warehouse level.
+- [Search Goods Info](./search-goods-info.md) - This API is used to retrieve a list of goods belonging to the merchant that meet the specified conditions. It returns detailed information about the goods, including their IDs, names, and other attributes, such as the goods-SKU relationship, dimensions, and weight as verified by the warehouse.
+- [Get FBF MCF Order Status](./get-fbf-mcf-order-status.md) - This API allows you to query the status of MCF Orders.
+- [Cancel FBT MCF Order](./cancel-fbt-mcf-order.md) - This API supports order cancellation at the level of individual consign orders by providing the corresponding mcf_order_id and its associated consign order information.
+- [Create FBT MCF Order](./create-fbt-mcf-order.md) - For orders created on other sales channels that require fulfillment via FBT, this API enables you to create corresponding orders (hereinafter referred to as MCF Orders). Once MCF Orders are successfully created, they will be automatically submitted to the FBT system for fulfillment.
+- [Query Goods Inventory For MCF](./query-goods-inventory-for-mcf.md) - Query goods inventory for Multi-Channel Fulfillment.
+- [Get FBT Merchant MCF Status](./get-fbt-merchant-mcf-status.md) - This API verifies whether a seller is registered as a Fulfillment by TikTok (FBT) merchant and participated in Multi Channel Fulfillment(MCF). If the seller is onboarded in FBT and enrolled in MCF, the API returns the true flag of MCF status.
+- [Create Update Inbound Plan](./create-update-inbound-plan.md) - Initializes a new inbound plan or updates an existing one by defining goods, or carton configurations and dimensions.
+- [List Available Inbound Method](./list-available-inbound-method.md) - Retrieves valid inbound shipping methods and arrival time windows for a specific plan.
+- [Get Inbound Method Detail](./get-inbound-method-detail.md) - Get detailed information regarding inbound plan placement options.
+- [Print Label](./print-label.md) - This API uses an asynchronous Long-Running Operation (LRO) pattern to generate label files.
+- [Update Tracking](./update-tracking.md) - This API manages carton-level tracking information for inbound orders. It utilizes upsert logic to create new tracking records or overwrite existing entries as required.
+- [Cancel Inbound Order](./cancel-inbound-order.md) - This API is used to cancel an inbound order prior to warehouse arrival, preventing further processing and updating the order status.
+- [Get Inbound Order](./get-inbound-order.md) - This API is used to retrieve the inbound order details including the planned inbound detail, actual inbound detail and inbound status, etc.
+- [Confirm Inbound Method](./confirm-inbound-method.md) - Finalize the selection of a specific warehouse placement option for a Fulfilled by TikTok (FBT) inbound plan.
+- [Ship Inbound Order](./ship-inbound-order.md) - Finalizes the shipment details for a specific inbound order, including carton information and shipping methods.
+- [Update Goods Sku Relation](./update-goods-sku-relation.md) - Updates the relationship between goods and SKUs by binding or unbinding them.
+- [Create Goods](./create-goods.md) - Create goods for Fulfilled by TikTok (FBT).
+- [Get Hazmat And Expiration Info](./get-hazmat-and-expiration-info.md) - Retrieve hazardous materials (hazmat) and expiration date management information for specified TikTok Shop SKU IDs.
+- [Update Goods](./update-goods.md) - Update goods information for Fulfilled by TikTok (FBT).
+- [Logistic API overview](./logistic-api-overview.md) - Provides an overview of the Logistic API, helping sellers obtain information about logistic resources like warehouses, delivery options, and shipping providers.
+- [Get Warehouse List](./get-warehouse-list.md) - This API retrieves all warehouse information associated with the seller. Warehouse information includes name, status, address, and other details.
+- [Get Global Seller Warehouse](./get-global-seller-warehouse.md) - This API retrieves all global warehouse information associated with the seller. Warehouse information includes global warehouse ID, warehouse name, and warehouse ownership.
+- [Get Warehouse Delivery Options](./get-warehouse-delivery-options.md) - This API is used to obtain a list of delivery options available through the seller's designated warehouse.
+- [Get Shipping Providers](./get-shipping-providers.md) - No description available
+- [Get Available Shipping Template](./get-available-shipping-template.md) - get seller's available shipping template and return the reason why the template is not available
+- [Get Logistics Tracking](./get-logistics-tracking.md) - This API can use the order number to obtain the corresponding logistics tracking information. This API can obtain more comprehensive logistics tracking information, which is more detailed than the Get tracking API.
+- [Return, refund, and cancel API overview](./return-refund-and-cancel-api-overview.md) - No description available
+- [Return reasons](./return-reasons.md) - No description available
+- [Refund reasons](./refund-reasons.md) - No description available
+- [Cancel reasons](./cancel-reasons.md) - No description available
+- [Get Reject Reasons](./get-reject-reasons.md) - Use this API to retrieve the seller reject-reason options currently applicable to the specified aftersales request.
+- [Approve Return](./approve-return.md) - Use this API to approve a buyer's return request. The exact effect depends on the return type and return status.
+- [Reject Return](./reject-return.md) - Use this API to reject a buyer's return or refund request. The valid decision depends on the current request type and status.
+- [Get Return Records](./get-return-records.md) - Retrieve record entries for specific return request. Each item in data.records represents action or lifecycle event for specified return_id.
+- [Approve Cancellation](./approve-cancellation.md) - Use this API to approve a buyer-initiated cancellation request identified by cancel_id. Call this API only when the cancellation request is still waiting for seller action.
+- [Reject Cancellation](./reject-cancellation.md) - Use this API to reject a buyer's cancellation request for the specified cancel_id. Before calling this API, make sure the request is still in a state where seller rejection is currently allowed.
+- [Upload Shipping Document And Tracking Info](./upload-shipping-document-and-tracking-info.md) - Use this API to upload return shipping documents, tracking numbers, and carriers for buyers.
+- [Get Decision Eligibility](./get-decision-eligibility.md) - Use this API to evaluate which seller decisions are currently allowed for the specified aftersales request.
+- [Calculate Refund](./calculate-refund.md) - Use this API to estimate the refundable amount for a cancellation, refund, or return-and-refund request.
+- [Cancel Order](./cancel-order.md) - Use this API to cancel an order on behalf of a seller. In the US and UK markets, when an item is out of stock, partial cancellation on the single item level is supported by this API.
+- [Create Return](./create-return.md) - Use this API to create a seller-initiated aftersales request for an order on behalf of the buyer.
+- [Search Cancellations](./search-cancellations.md) - Use this API to search and retrieve one or more order cancellations.
+- [Search Returns](./search-returns.md) - No description available
+- [Get Aftersale Eligibility](./get-aftersale-eligibility.md) - Use this API to check eligible aftersale solutions for an order, including whether the seller or buyer can initiate a refund, return, or cancel a specific order.
+- [Search Aftersales Request](./search-aftersales-request.md) - Used to search for aftersales request level data.
+- [Review Aftersales](./review-aftersales.md) - API used to review (approve, reject, or offer alternatives to) a buyer's return request.
+- [Search Return Merchandise Authorization](./search-return-merchandise-authorization.md) - Used to search for RMA request level data
+- [Finance API overview](./finance-api-overview.md) - No description available
+- [Get Statements](./get-statements.md) - Retrieves the statements generated for a shop and the key statement information based on a specified date range or their payment status.
+- [Get Withdrawals](./get-withdrawals.md) - Get the list of the withdrawal records (when Seller's withdraw money from TikTokShop) based on the specified date range.
+- [Get Transactions by Order](./get-transactions-by-order.md) - Retrieves the SKU-level details of an order transaction. This covers transactions related to sales, fees, commissions, shipping, taxes, and refunds.
+- [Get Transactions by Statement](./get-transactions-by-statement.md) - Retrieves the details of a statement, including the transactions, which can be a standard order transaction, an adjustment transaction, or a reserve-related transaction.
+- [Get Unsettled Transactions](./get-unsettled-transactions.md) - Retrieve list of unsettled transactions (incl. Orders & Adjustments) generated by seller, returning detailed fee breakdown for list of order ID and adjustment ID.
+- [Get Payments](./get-payments.md) - Retrieves records of automated payments for a shop based on a specified date range.
+- [Get Video Performances](./get-video-performances.md) - This is a US-creator-only API for now. And it is for getting Tiktok E-commerce video metrics(incliding anchor_display_rate, ctr, orders, items_sold, gmv) to analysis.
+- [Get Shop Performance Per Hour](./get-shop-performance-per-hour.md) - Daily performance per hour detail, within 30 days. Including today.
+- [Get Shop LIVE Performance Per Minutes](./get-shop-live-performance-per-minutes.md) - Get the Live session performance break down to every minutes, after the live session is finished. This API only returns data of live streams hosted by shop official account or marketing account.
+- [Get Shop LIVE Products Performance List](./get-shop-live-products-performance-list.md) - Get sale performance of each product in shop related LIVE session (official account & marketing accounts).
+- [Get Shop Performance](./get-shop-performance.md) - Returns performance metrics at shop/seller level.
+- [Get Shop Product Performance Detail](./get-shop-product-performance-detail.md) - Return performance detailed metrics for a product.
+- [Get Shop SKU Performance](./get-shop-sku-performance.md) - Return SKU performance metrics.
+- [Get Shop SKU Performance List](./get-shop-sku-performance-list.md) - Returns a list of SKU performance metrics.
+- [Get Shop Video Performance Overview](./get-shop-video-performance-overview.md) - Returns overall performance metrics for all videos under a shop.
+- [Get Shop Video Performance Details](./get-shop-video-performance-details.md) - Returns detailed performance metrics for a (requested) video.
+- [Get Shop Video Product Performance List](./get-shop-video-product-performance-list.md) - Returns performance metrics for a list of products promoted in a given video.
+- [Get Shop LIVE Performance List](./get-shop-live-performance-list.md) - Returns a list of LIVE stream sessions and associated metrics for a shop. Sellers can only query room ID data for their own official creator accounts.
+- [Get Shop LIVE Performance Overview](./get-shop-live-performance-overview.md) - Returns overall performance metrics for all LIVE stream sessions under a certain shop.
+- [Get View Trend Performances](./get-view-trend-performances.md) - Use this API to retrieve the viewer counts and trends of a live room
+- [Get Traffic Performances](./get-traffic-performances.md) - This API gets the traffic performances of live streaming for distribution analysis
+- [Get User Portraits](./get-user-portraits.md) - This API gets the user portrait of live room
+- [Get Product Stats](./get-product-stats.md) - This API gets the product list of live room
+- [Get Interactive Trend Performances](./get-interactive-trend-performances.md) - This API gets interactive performance trend data.
+- [Get GMV Trend Performances](./get-gmv-trend-performances.md) - This API gets the trend points of gmv related information
+- [Get Live Core Stats](./get-live-core-stats.md) - This API returns the core stats of live detail, e.g. GMV.
+- [Get Bestselling Products](./get-bestselling-products.md) - Get the top 100 performing products of the target date range.
+- [Get Bestselling Creators](./get-bestselling-creators.md) - Get the top 100 performing creators of the target date range.
+- [Get Bestselling Videos](./get-bestselling-videos.md) - Get top 100 performing videos of target date range.
+- [Get Bestselling LIVEs](./get-bestselling-lives.md) - Get the top 100 performing lives of the target date range
+- [Get Shop Video Performance List](./get-shop-video-performance-list.md) - Returns a list of videos and associated metrics for a shop.
+- [Get Shop Product Performance List](./get-shop-product-performance-list.md) - Returns a list of product performance overview metrics.
+- [Customer Service API overview](./customer-service-api-overview.md) - No description available
+- [Message Types](./message-types.md) - No description available
+- [Post-sales Solutions for Customer Services](./post-sales-solutions-for-customer-services.md) - No description available
+- [Create Conversation](./create-conversation.md) - Use this API to create a conversation with the specified buyer, on behalf of a shop. When there's no prior conversation, calling this API creates a new conversation; when there's a prior conversation, no matter whether it's active, finished, or closed, calling this API reopens the conversation and returns the same conversation ID as the prior one.
+- [Get Conversations](./get-conversations.md) - Use this API to retrieve a shop's conversations with buyers.
+- [Get Conversation Messages](./get-conversation-messages.md) - Use this API to get all messages in a conversation between a buyer and a shop. Calling this API does not mark the messages as read.
+- [Upload Buyer Messages Image](./upload-buyer-messages-image.md) - Upload an image first, before sending an image as a message using Send Message.
+- [Read Message](./read-message.md) - Use this API to mark all messages sent by the buyer as read. You are suggested to call this API before replying to their messages.
+- [Get Agent Settings](./get-agent-settings.md) - This API is used to get agent settings. This API allows the agent to see whether the agent can accept chats from buyers.
+- [Update Agent Settings](./update-agent-settings.md) - Use this API to update agent status on behalf of the agent. Agents can set whether they can accept auto assigned chats.
+- [Get Customer Service Performance](./get-customer-service-performance.md) - Get the average customer service performance of a shop for a selected time period
+- [Get Conversation](./get-conversation.md) - Use this API to retrieve information about a conversation by ID.
+- [Search Sessions](./search-sessions.md) - Search customer service sessions within a specified time range.
+- [End Session](./end-session.md) - Use this API to end an active customer service session assigned to an agent.
+- [Send Message](./send-message.md) - Use this API to send a message to the buyer in a conversation.
+- [Customer engagement API overview](./customer-engagement-api-overview.md) - Suite of Customer Engagement API endpoints that enable businesses to integrate their CRM platforms with TikTok Shop to capitalize on TikTok's extensive reach.
+- [Get Message Templates](./get-message-templates.md) - Get a library of customer engagement message templates predefined by TikTok Shop, which you can use directly in your customer engagement communications.
+- [Create Engagement Task](./create-engagement-task.md) - Create an engagement task that acts as a container for grouping messages with similar content and rules, allowing sellers to track and compare task performance across different types of content.
+- [Send Engagement Message](./send-engagement-message.md) - Send messages to specific customers for a particular engagement task.
+- [Get Task Performances](./get-task-performances.md) - Retrieve detailed performance metrics for a customer engagement task, including message reads, order conversions, and other key engagement statistics.
+- [Create Custom Engagement Task](./create-custom-engagement-task.md) - Create an engagement task that uses a self-defined custom message instead of predefined message templates from TikTok Shop. The task acts as a container for grouping messages with similar content and rules.
+- [Get Feature Permissions](./get-feature-permissions.md) - Retrieve information about customer engagement features that the shop has permission to use.
+- [Affiliate Creator API overview](./affiliate-creator-api-overview.md) - No description available
+- [Get Creator Profile](./get-creator-profile.md) - This API gets the creator profile information.
+- [Get Showcase Products](./get-showcase-products.md) - This API lists the products in the creator's showcase, paginated by specified page size and iterated through pages by page token for up to 2000 products in the showcase.
+- [Add Showcase Products](./add-showcase-products.md) - This API adds the products to the creator's showcase. The platform will return the add status of the products, and error code and error message if the deletion fails.
+- [Remove Showcase Products](./remove-showcase-products.md) - This API removes the products in the creator's showcase.
+- [Top Showcase Products](./top-showcase-products.md) - Use this API to move products to the top in a creator's showcase.
+- [Creator Search Open Collaboration Product](./creator-search-open-collaboration-product.md) - This API is used to search the information of products with open collaboration by category, commission rate, and keywords. It will return all products on the TikTok Shop Affiliate Product Marketplace that are in an open collaboration.
+- [Get Open Collaboration Product List By Product Ids](./get-open-collaboration-product-list-by-product-ids.md) - Get Product OpenCollaboration Product List By Product Ids
+- [Search Creator Target Collaborations](./search-creator-target-collaborations.md) - This API is used to search for creator's target collaborations and the products within these target collaborations.
+- [Search Creator Sample Applications](./search-creator-sample-applications.md) - Get sample application list of creator.
+- [Get Creator Sample Application Detail](./get-creator-sample-application-detail.md) - Get the sample detail of specified sample application.
+- [Creator Search Sample Application Fulfillments](./creator-search-sample-application-fulfillments.md) - You, the creator, can use this API to query the fulfillment status for the received sample applications.
+- [Creator Generate General Link](./creator-generate-general-link.md) - Generate material sharing links for publishers. Material type must be PRODUCT.
+- [Creator Generate Publisher Link](./creator-generate-publisher-link.md) - Generate material sharing links for a specific publisher. Currently, the material type must be PRODUCT.
+- [Creator Search Affiliate Trace Orders](./creator-search-affiliate-trace-orders.md) - This API allows the partner to retrieve a list of affiliate orders generated by a creator, returning the order ID and the product ID.
+- [Search Creator Affiliate Orders](./search-creator-affiliate-orders.md) - This API allows the partner to retrieve a list of affiliate orders generated by a creator, returning the order ID and the product ID.
+- [Get Creator Applicable Sample Label](./get-creator-applicable-sample-label.md) - Check if a creator can apply for a sample of a specific product.
+- [Upload Shoppable Video File](./upload-shoppable-video-file.md) - Use this API to upload the video before posting to TikTok
+- [Get Shop Products](./get-shop-products.md) - Developer can utilize this API to search and retrieve products information of shop which is bound by a specific creator with specific keywords.
+- [Get Shoppable Video Status](./get-shoppable-video-status.md) - Use this API to get shoppable video posting results.
+- [Precheck Video Content](./precheck-video-content.md) - Use this API to pre-check if there's any violation in the video and the shoppable content anchor
+- [Get Shoppable Video Precheck Result](./get-shoppable-video-precheck-result.md) - Use this API to get video pre-check result
+- [Post Shoppable Video](./post-shoppable-video.md) - Post shoppable video to TikTok.
+- [Affiliate Partner API overview](./affiliate-partner-api-overview.md) - No description available
+- [Create Affiliate Partner Campaign](./create-affiliate-partner-campaign.md) - Create campaign for targeted or public sellers. Set campaign period, registration period, and commission requirements.
+- [Edit Affiliate Partner Campaign](./edit-affiliate-partner-campaign.md) - This API offers the ability to edit an Affiliate Partner campaign. No editing after the campaign is closed.
+- [Publish Affiliate Partner Campaign](./publish-affiliate-partner-campaign.md) - This API offers the ability to publish an Affiliate Partner campaign. The campaign will be displayed to sellers after publishing.
+- [Review Affiliate Partner Campaign Product](./review-affiliate-partner-campaign-product.md) - This API offers the ability for the TikTok Affiliate Partner to review the products submitted by the sellers.
+- [Generate Affiliate Partner Campaign Product Link](./generate-affiliate-partner-campaign-product-link.md) - This API offers the ability to generate campaign product promotion links.
+- [Get Affiliate Partner Campaign Detail](./get-affiliate-partner-campaign-detail.md) - This API offers the ability to get affiliate campaign details.
+- [Get Affiliate Partner Campaign List](./get-affiliate-partner-campaign-list.md) - This API offers the ability to list campaigns created by the Affiliate Partner.
+- [Get Affiliate Partner Campaign Product List](./get-affiliate-partner-campaign-product-list.md) - This API offers the ability to list products submitted by sellers in an Affiliate Partner campaign.
+- [Get Affiliate Campaign Creator Fulfillment Status List](./get-affiliate-campaign-creator-fulfillment-status-list.md) - This API offers the ability to get the product of the campaign fulfillment status for creators who added partner campaign products to their showcase.
+- [Partner Generate Multi Affiliate Campaign Product Link](./partner-generate-multi-affiliate-campaign-product-link.md) - This API offers the ability to generate promotion links for multiple products in a campaign.
+- [Get Affiliate Campaign Creator Fulfillment Status Info](./get-affiliate-campaign-creator-fulfillment-status-info.md) - This API offers the ability to get the product fulfillment status for creators who added partner campaign products to their showcase.
+- [Get Affiliate Campaign Creator Product Content Statistics](./get-affiliate-campaign-creator-product-content-statistics.md) - Get statistics on creator's marketing video content.
+- [Get Affiliate Campaign Creator Product Sample Status](./get-affiliate-campaign-creator-product-sample-status.md) - Get progress on creator's sample status
+- [Search CAP Affiliate Orders](./search-cap-affiliate-orders.md) - Search the list of affiliate orders of the specified date range from a MCN or known as CAP - Creator Agency partner
+- [Search Tap Affiliate Orders](./search-tap-affiliate-orders.md) - TAP can use this API to retrieve a list of affiliate orders and track the affiliate conversions.
+- [Affiliate Seller API overview](./affiliate-seller-api-overview.md) - No description available
+- [Seller Search Creator on Marketplace](./seller-search-creator-on-marketplace.md) - No description available
+- [Get Marketplace Creator Performance](./get-marketplace-creator-performance.md) - Get the Creator Affiliate's Marketplace information and performance metrics in the last 30 days.
+- [Get Open Collaboration Settings](./get-open-collaboration-settings.md) - Get the open collaboration settings, including auto add settings.
+- [Edit Open Collaboration Settings](./edit-open-collaboration-settings.md) - This API is used to edit a Seller's open collaboration settings. It allows you to enroll your existing product catalog and all future products into an open collaboration plan.
+- [Get Open Collaboration Sample Rules](./get-open-collaboration-sample-rules.md) - Use this API to get the status and the details of the sample rules for products under an open collaboration.
+- [Edit Open Collaboration Sample Rule](./edit-open-collaboration-sample-rule.md) - Use this API to manage sample rules in open collaborations, like valid time periods, or thresholds for creators to request samples. You can create, update, or deactivate rules.
+- [Create Open Collaboration](./create-open-collaboration.md) - This API allows the seller to create an open collaboration by selecting products and setting a commission rate.
+- [Search Open Collaboration](./search-open-collaboration.md) - Retrieve all open collaboration information from merchants, including commission rate, add to showcase and post content creator count.
+- [Remove Open Collaboration](./remove-open-collaboration.md) - Remove open collaboration for product. You can only remove open collaboration when status==NORMAL.
+- [Get Open Collaboration Creator Content Detail](./get-open-collaboration-creator-content-detail.md) - This API allows the seller to get the creator content details of specified open collaboration.
+- [Seller Search Affiliate Open Collaboration Product](./seller-search-affiliate-open-collaboration-product.md) - Search products with open collaboration by category, commission rate, and keywords.
+- [Remove Creator From Open Collaboration](./remove-creator-from-open-collaboration.md) - Remove creators from open collaboration.
+- [Create Target Collaboration](./create-target-collaboration.md) - No description available
+- [Search Target Collaborations](./search-target-collaborations.md) - No description available
+- [Update Target Collaboration](./update-target-collaboration.md) - Update STANDARD target collaboration.
+- [Remove Target Collaboration](./remove-target-collaboration.md) - Remove affiliate target collaboration.
+- [Query Target Collaboration Detail](./query-target-collaboration-detail.md) - This API is used by Sellers to get target collaboration information.
+- [Get Conversation List](./get-conversation-list.md) - No description available
+- [Get Message in the Conversation](./get-message-in-the-conversation.md) - Get chat history in one conversation.
+- [Get Latest Unread Messages](./get-latest-unread-messages.md) - Get the unread messages from the last minute.
+- [Create Conversation with creator](./create-conversation-with-creator.md) - Get the existing conversation or create a new conversation with the specified TikTok creator for later communication.
+- [Upload Message Image](./upload-message-image.md) - Uploads an image to be used in a message. You must use this API to upload the image first, before sending an image as a message using Send IM Message.
+- [Send IM Message](./send-im-message.md) - The API for sending IM messages.
+- [Mark Conversation Read](./mark-conversation-read.md) - Mark messages in specified conversations as read.
+- [Seller Search Sample Applications](./seller-search-sample-applications.md) - No description available
+- [Seller Review Sample Applications](./seller-review-sample-applications.md) - This API allows the seller to approve or reject the creator's sample application in an open collaboration. When rejecting an application, the seller must provide a specific reason.
+- [Seller Search Sample Applications Fulfillments](./seller-search-sample-applications-fulfillments.md) - Get fulfillment status of specific sample application and whether fulfillment resulted in orders.
+- [Generate Target Collaboration Link](./generate-target-collaboration-link.md) - Generate Target Collaboration Link for seller to share with creator. Link directs creator to review details and accept.
+- [Generate Affiliate Product Promotion Link](./generate-affiliate-product-promotion-link.md) - Generate affiliate exclusive product link based on all open collaboration products available within the TikTok Shop Affiliate Product Marketplace.
+- [Seller Get Sample Request Deeplink](./seller-get-sample-request-deeplink.md) - Use this API to get a TikTok deeplink, use this deeplink to launch the TikTok app and land the user on the sample request page.
+- [Search Seller Affiliate Orders](./search-seller-affiliate-orders.md) - Retrieve list of affiliate orders generated by seller to track affiliate-conversions.
+- [Get Seller Search Creator Marketplace Advanced Filters](./get-seller-search-creator-marketplace-advanced-filters.md) - This API allows you to obtain the advanced filters available in Seller Search Creator Marketplace. Because we are constantly releasing new filters which are specific to each country or region, this API serves as a way for developers to retrieve the latest available search filters.
+- [Create Compass Offline Export Task](./create-compass-offline-export-task.md) - Create an asynchronous offline export task for the specified doc_type and plan_type within a given time window. Returns a task_id for subsequent status query and file download.
+- [Get Compass Task List](./get-compass-task-list.md) - Retrieve the list of export tasks created via Open API for the authorized seller (last 7 days). Supports pagination and returns task status, file_name and timestamps.
+- [Download Compass Task File](./download-compass-task-file.md) - Download the result file of a completed export task by taskId. Requires ownership validation; returns file.
+- [Check Target Collaboration Conflicts](./check-target-collaboration-conflicts.md) - Retrieve conflicting target collaborations for the product and determine if they can be terminated
+- [Cancel Target Collaboration Conflicts](./cancel-target-collaboration-conflicts.md) - Execute resolution actions on resolvable conflict items within the scope of seller authorization.
+- [Confirm Package Shipment](./confirm-package-shipment.md) - This API enables a warehouse service provider to send package shipment information for an order. Only warehouse service providers who have been certified by the platform have permission to access this interface.
+- [Upload File Init](./upload-file-init.md) - Initialize upload session for large file (e.g., video) to TikTok Shop server.
+
+---
+*Auto-generated index. Each skill contains implementation details for the corresponding TikTok Shop API.*
