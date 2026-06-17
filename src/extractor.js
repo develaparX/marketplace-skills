@@ -26,6 +26,7 @@ class ContentExtractor {
         }
       }
 
+      console.warn('  ⚠ No content container found, using full body');
       return document.body.innerHTML;
     });
 

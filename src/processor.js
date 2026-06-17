@@ -50,26 +50,33 @@ Extract and return a JSON object with this exact structure:
 
 If any field cannot be determined from the docs, use null. Return ONLY the JSON object, no other text.`;
 
-    try {
-      const response = await this.client.chat.completions.create({
-        model: this.config.llm.model,
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.1,
-        max_tokens: 4000,
-      });
+    // ponytail: single retry with backoff, more if throughput matters
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const response = await this.client.chat.completions.create({
+          model: this.config.llm.model,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.1,
+          max_tokens: 4000,
+        });
 
-      if (!response.choices?.[0]?.message?.content) {
-        return { error: 'LLM returned empty response' };
+        if (!response.choices?.[0]?.message?.content) {
+          return null;
+        }
+
+        const content = response.choices[0].message.content;
+
+        // Parse JSON from response (handle markdown code blocks)
+        const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, content];
+        return JSON.parse(jsonMatch[1].trim());
+      } catch (error) {
+        if (attempt === 0) {
+          await new Promise(r => setTimeout(r, 2000));
+        } else {
+          console.error(`LLM processing error for ${pageTitle}:`, error.message);
+          return null;
+        }
       }
-
-      const content = response.choices[0].message.content;
-
-      // Parse JSON from response (handle markdown code blocks)
-      const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, content];
-      return JSON.parse(jsonMatch[1].trim());
-    } catch (error) {
-      console.error(`LLM processing error for ${pageTitle}:`, error.message);
-      return { error: error.message };
     }
   }
 
@@ -91,22 +98,29 @@ Write a markdown document that explains HOW to implement this API. Include:
 
 Write in a practical, developer-focused style. No fluff, just actionable information.`;
 
-    try {
-      const response = await this.client.chat.completions.create({
-        model: this.config.llm.model,
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.3,
-        max_tokens: 3000,
-      });
+    // ponytail: single retry with backoff, more if throughput matters
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const response = await this.client.chat.completions.create({
+          model: this.config.llm.model,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.3,
+          max_tokens: 3000,
+        });
 
-      if (!response.choices?.[0]?.message?.content) {
-        return { error: 'LLM returned empty response' };
+        if (!response.choices?.[0]?.message?.content) {
+          return null;
+        }
+
+        return response.choices[0].message.content;
+      } catch (error) {
+        if (attempt === 0) {
+          await new Promise(r => setTimeout(r, 2000));
+        } else {
+          console.error('Skill generation error:', error.message);
+          return null;
+        }
       }
-
-      return response.choices[0].message.content;
-    } catch (error) {
-      console.error('Skill generation error:', error.message);
-      return { error: error.message };
     }
   }
 }

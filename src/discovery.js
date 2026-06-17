@@ -6,7 +6,7 @@ class SidebarDiscovery {
   }
 
   async discoverLinks() {
-    const timeout = this.config.timeout ?? 15000;
+    const timeout = this.config.browser?.timeout ?? 15000;
 
     let page;
     try {
