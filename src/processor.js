@@ -17,8 +17,11 @@ class LLMProcessor {
         messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
         max_tokens: 10,
       });
-      return !!response.choices?.[0]?.message?.content;
+      // API responded = connection works, even if content is empty
+      return !!response.choices?.[0];
     } catch (err) {
+      console.error('\n   Detail:', err.message);
+      if (err.status) console.error('   Status:', err.status);
       return false;
     }
   }

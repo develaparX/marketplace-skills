@@ -19,24 +19,53 @@ class SidebarDiscovery {
     }
 
     try {
-      await page.waitForSelector('a[href*="/docv2/page/"]', { timeout });
+      await page.waitForSelector('#doc_left_menu', { timeout });
     } catch (err) {
       console.error('[SidebarDiscovery] sidebar not found:', err.message);
       return [];
     }
 
-    const links = await page.$$eval('a[href*="/docv2/page/"]', (els) =>
-      els.map((el) => ({
-        title: el.textContent.trim(),
-        href: el.href,
-      }))
+    // Expand all collapsed categories
+    // Categories are <a> without href, links are <a> with href
+    const expanded = await page.evaluate(() => {
+      let count = 0;
+      // Find all category toggles (no href, has arrow icon)
+      const categories = document.querySelectorAll(
+        '#doc_left_menu a.style-module__side-menu-dir--IbLLG'
+      );
+      categories.forEach((cat) => {
+        // Click to expand
+        cat.click();
+        count++;
+      });
+      return count;
+    });
+
+    // Wait for expanded content to load
+    await new Promise((r) => setTimeout(r, 1500));
+
+    // Now extract all links with href
+    const links = await page.$$eval(
+      '#doc_left_menu a[href*="/docv2/page/"]',
+      (els) =>
+        els.map((el) => {
+          // Get method tag (GET/POST/PUT/DELETE) if exists
+          const tag = el.querySelector('.arco-tag-content .text');
+          const method = tag ? tag.textContent.trim() : '';
+          const title = el
+            .querySelector('.style-module__allow-wrap--f5G3W')
+            ?.textContent?.trim();
+          return { title, href: el.href, method };
+        })
     );
 
-    // Deduplicate by href, keep all docs
-    const unique = [...new Map(links.map((link) => [link.href, link])).values()];
+    // Deduplicate by href
+    const unique = [
+      ...new Map(links.map((link) => [link.href, link])).values(),
+    ];
 
-    // Filter: skip empty titles and non-doc links
-    return unique.filter((link) => link.title.length > 0);
+    // Filter: skip empty titles
+    return unique.filter((link) => link.title && link.title.length > 0);
   }
 }
 
